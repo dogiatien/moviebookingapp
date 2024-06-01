@@ -42,10 +42,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
           icon: Icon(Icons.person),
           label: 'Profile',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.logout),
-          label: 'Logout',
-        ),
       ],
     );
   }
