@@ -1,36 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class ProfileScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Profile'),
-//       ),
-//       body: Center(
-//         child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             CircleAvatar(
-//               radius: 50,
-//               backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-//             ),
-//             SizedBox(height: 20),
-//             Text(
-//               'Tên user',
-//               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//             ),
-//             SizedBox(height: 10),
-//             Text(
-//               'Email@email.com',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {

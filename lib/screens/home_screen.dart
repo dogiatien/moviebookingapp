@@ -28,7 +28,7 @@
 //               alignment: Alignment.center, // Canh giữa hình ảnh
 //             ),
 //             // Các thuộc tính khác của Container như màu nền cũng có thể được sử dụng ở đây
-//             // color: Colors.blue, 
+//             // color: Colors.blue,
 //             // ...
 //           ),
 //           Expanded(
@@ -45,6 +45,7 @@ import '../models/movie.dart';
 import '../widgets/movies_list.dart';
 import '../app_colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
 class HomeScreen extends StatelessWidget {
   final List<Movie> movies;
 
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-           CarouselSlider(
+            CarouselSlider(
               items: [
                 'lib/images/h1.jpg',
                 'lib/images/h2.jpg',
@@ -100,25 +101,21 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding:const EdgeInsets.only(left: 8.0,top:8.0),
-         child:
-          Text(
-            title,
-            
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.Title,
+            padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.Title,
+              ),
             ),
-          ),
           ),
           SizedBox(height: 10),
           Container(
             height: 210,
             child: MovieList(movies),
           ),
-          
-          
         ],
       ),
     );

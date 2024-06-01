@@ -1,64 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class SearchScreen extends StatefulWidget {
-//   @override
-//   _SearchScreenState createState() => _SearchScreenState();
-// }
-
-// class _SearchScreenState extends State<SearchScreen> {
-//   late FocusNode _focusNode;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _focusNode = FocusNode();
-//   }
-
-//   @override
-//   void dispose() {
-//     _focusNode.dispose();
-//     super.dispose();
-//   }
-
-//   void _handleTap() {
-//     if (_focusNode.hasFocus) {
-//       _focusNode.unfocus(); // Tắt bàn phím nếu đang mở
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: _handleTap, // Bắt sự kiện khi chạm vào bất kỳ đâu trên màn hình
-//       child: Scaffold(
-//         appBar: AppBar(
-//           title: Text('Search'),
-//           actions: [
-//             Expanded(
-//               child: Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
-//                 child: TextField(
-//                   focusNode: _focusNode, // Đặt focus node cho text field
-//                   decoration: InputDecoration(
-//                     hintText: 'Search...',
-//                     border: OutlineInputBorder(),
-//                   ),
-//                   onChanged: (value) {
-//                     // Xử lý khi người dùng thay đổi nội dung trong ô tìm kiếm
-//                   },
-//                 ),
-//               ),
-              
-//             ),
-//           ],
-//         ),
-//         body: Center(
-//           child: Text('Search Screen'),
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -68,7 +7,8 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late FocusNode _focusNode;
-  String _selectedValue = 'Action'; // Biến để lưu giá trị được chọn trong dropdown
+  String _selectedValue =
+      'Action'; // Biến để lưu giá trị được chọn trong dropdown
 
   @override
   void initState() {
