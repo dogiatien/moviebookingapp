@@ -82,139 +82,143 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.movie.title,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              hint: Text('Select Theater'),
-              value: _selectedTheater,
-              items: _theaters.map((theater) {
-                return DropdownMenuItem<String>(
-                  value: theater,
-                  child: Text(theater),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedTheater = value;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            Text('Select Date'),
-            Container(
-              height: 60,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: dates.length,
-                itemBuilder: (context, index) {
-                  DateTime date = dates[index];
-                  bool isSelected =
-                      _selectedDate != null && _selectedDate!.day == date.day;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedDate = date;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: isSelected ? Colors.blue : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            DateFormat.E().format(date), // Hiển thị thứ
-                            style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black,
-                            ),
-                          ),
-                          Text(
-                            DateFormat.d().format(date), // Hiển thị ngày
-                            style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.movie.title,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            ),
-            SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              hint: Text('Select Time'),
-              value: _selectedTime,
-              items: _times.map((time) {
-                return DropdownMenuItem<String>(
-                  value: time,
-                  child: Text(time),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedTime = value;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            if (_selectedTheater != null &&
-                _selectedDate != null &&
-                _selectedTime != null) ...[
-              Text('Select Seat(s)'),
-              Wrap(
-                spacing: 10.0,
-                runSpacing: 10.0,
-                children: allSeats.map((seat) {
-                  bool isSelected = selectedSeats.contains(seat);
-                  return GestureDetector(
-                    onTap: () => _toggleSelectedSeat(seat),
-                    child: Chip(
-                      label: Text(seat),
-                      backgroundColor:
-                          isSelected ? Colors.blue : Colors.grey.shade300,
-                    ),
+              SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                hint: Text('Select Theater'),
+                value: _selectedTheater,
+                items: _theaters.map((theater) {
+                  return DropdownMenuItem<String>(
+                    value: theater,
+                    child: Text(theater),
                   );
                 }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedTheater = value;
+                  });
+                },
               ),
               SizedBox(height: 20),
-              Text(
-                  'Total Amount: \$${_calculateTicketPrice().toStringAsFixed(2)}'),
-              SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (selectedSeats.isNotEmpty) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (ctx) => SuccessScreen(),
+              Text('Select Date'),
+              Container(
+                height: 60,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: dates.length,
+                  itemBuilder: (context, index) {
+                    DateTime date = dates[index];
+                    bool isSelected =
+                        _selectedDate != null && _selectedDate!.day == date.day;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedDate = date;
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 8),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        decoration: BoxDecoration(
+                          color:
+                              isSelected ? Colors.blue : Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('Please select at least one seat!')),
-                      );
-                    }
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              DateFormat.E().format(date), // Hiển thị thứ
+                              style: TextStyle(
+                                color: isSelected ? Colors.white : Colors.black,
+                              ),
+                            ),
+                            Text(
+                              DateFormat.d().format(date), // Hiển thị ngày
+                              style: TextStyle(
+                                color: isSelected ? Colors.white : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   },
-                  child: Text(
-                    'Book Now',
-                  ),
                 ),
               ),
+              SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                hint: Text('Select Time'),
+                value: _selectedTime,
+                items: _times.map((time) {
+                  return DropdownMenuItem<String>(
+                    value: time,
+                    child: Text(time),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedTime = value;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              if (_selectedTheater != null &&
+                  _selectedDate != null &&
+                  _selectedTime != null) ...[
+                Text('Select Seat(s)'),
+                Wrap(
+                  spacing: 10.0,
+                  runSpacing: 10.0,
+                  children: allSeats.map((seat) {
+                    bool isSelected = selectedSeats.contains(seat);
+                    return GestureDetector(
+                      onTap: () => _toggleSelectedSeat(seat),
+                      child: Chip(
+                        label: Text(seat),
+                        backgroundColor:
+                            isSelected ? Colors.blue : Colors.grey.shade300,
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 20),
+                Text(
+                    'Total Amount: \$${_calculateTicketPrice().toStringAsFixed(2)}'),
+                SizedBox(height: 20),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (selectedSeats.isNotEmpty) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (ctx) => SuccessScreen(),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content:
+                                  Text('Please select at least one seat!')),
+                        );
+                      }
+                    },
+                    child: Text(
+                      'Book Now',
+                    ),
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
