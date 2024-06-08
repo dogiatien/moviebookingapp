@@ -1,5 +1,9 @@
-
 import 'package:flutter/material.dart';
+import 'package:moviebookingapp/screens/admin_dashboard.dart';
+import 'package:moviebookingapp/screens/manage_movies.dart';
+import 'package:moviebookingapp/screens/manage_showtimes.dart';
+import 'package:moviebookingapp/screens/manage_tickets.dart';
+import 'package:moviebookingapp/screens/manage_users.dart';
 import 'screens/home_screen.dart';
 import 'screens/schedule_screen.dart';
 import 'screens/search_screen.dart';
@@ -12,6 +16,7 @@ import 'widgets/bottom_appbar.dart';
 void main() {
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainScreen(),
+      home: LoginScreen(),
+      routes: {
+        '/admin_dashboard': (context) =>
+            AdminDashboard(), // Trang quản lý chính
+        '/manage_movies': (context) => ManageMoviesPage(), // Trang quản lý phim
+        '/manage_showtimes': (context) =>
+            ManageShowtimesPage(), // Trang quản lý lịch chiếu
+        '/manage_users': (context) =>
+            ManageUsersPage(), // Trang quản lý người dùng
+        '/manage_tickets': (context) => ManageTicketsPage(), // Trang quản lý vé
+      },
     );
   }
 }
@@ -36,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
     Movie(
       id: '1',
       title: 'Movie 1',
-       genre:'cartoon',
+      genre: 'cartoon',
       Director: 'Đạo diễn 1',
       price: '56.000 vnd',
       description: 'Mô tả chi tiết cho movie 1',
@@ -45,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
     Movie(
       id: '2',
       title: 'Movie 2',
-      genre:  'comedy',
+      genre: 'comedy',
       price: '89.000 vnd',
       Director: 'Đạo diễn 2',
       description: 'Mô tả chi tiết cho movie 2',
@@ -82,18 +97,18 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
         children: _screens,
       ),
-      bottomNavigationBar: CustomBottomNavigationBar ( // Thay đổi thành CustomBottomAppBar
+      bottomNavigationBar: CustomBottomNavigationBar(
+        // Thay đổi thành CustomBottomAppBar
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
       ),
     );
   }
 }
-

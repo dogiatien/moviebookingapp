@@ -13,28 +13,54 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   int _ticketCount = 1;
-  String _selectedSeat = 'A1'; // Giá trị mặc định cho ghế ngồi
+  String _selectedSeat = 'A1';
+  List<String> selectedSeats = [];
+  List<String> allSeats = [
+    'A1',
+    'A2',
+    'A3',
+    'A4',
+    'A5',
+    'A6',
+    'B1',
+    'B2',
+    'B3',
+    'B4',
+    'B5',
+    'B6',
+    'C1',
+    'C2',
+    'C3',
+    'C4',
+    'C5',
+    'C6',
+    'D1',
+    'D2',
+    'D3',
+    'D4',
+    'D5',
+    'D6',
+  ];
 
-// Sử dụng kiểu String thay vì String?
-  void _handleChangeSeat(String? newValue) {
-    if (newValue != null) {
-      setState(() {
-        _selectedSeat = newValue;
-      });
-    }
+  double _ticketPrice = 70.000; // Giả sử giá vé mặc định là $10
+
+  // Tính giá vé cho từng ghế
+  double _calculateTicketPrice() {
+    return selectedSeats.length * _ticketPrice;
+  }
+
+  void _toggleSelectedSeat(String seat) {
+    setState(() {
+      if (selectedSeats.contains(seat)) {
+        selectedSeats.remove(seat);
+      } else {
+        selectedSeats.add(seat);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> seats = [
-      'A1',
-      'A2',
-      'A3',
-      'B1',
-      'B2',
-      'B3'
-    ]; // Danh sách các ghế ngồi
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Book Tickets for ${widget.movie.title}'),
@@ -49,85 +75,45 @@ class _BookingScreenState extends State<BookingScreen> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            Text('Number of Tickets'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.remove),
-                  onPressed: () {
-                    setState(() {
-                      if (_ticketCount > 1) _ticketCount--;
-                    });
-                  },
-                ),
-                Text(_ticketCount.toString(), style: TextStyle(fontSize: 18)),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    setState(() {
-                      _ticketCount++;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text('Select Seat'),
-            DropdownButton<String>(
-              value: _selectedSeat,
-              onChanged: _handleChangeSeat,
-              items: seats.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
+            Text('Select Seat(s)'),
+            Wrap(
+              spacing: 10.0,
+              runSpacing: 10.0,
+              children: allSeats.map((seat) {
+                bool isSelected = selectedSeats.contains(seat);
+                return GestureDetector(
+                  onTap: () => _toggleSelectedSeat(seat),
+                  child: Chip(
+                    label: Text(seat),
+                    backgroundColor:
+                        isSelected ? Colors.blue : Colors.grey.shade300,
+                  ),
                 );
               }).toList(),
             ),
             SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Xử lý thanh toán qua PayPal
-                    _handlePayment('PayPal');
-                  },
-                  child: Row(
-                    children: [
-                      Icon(Icons.payment),
-                      SizedBox(width: 8),
-                      Text('PayPal'),
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Xử lý thanh toán qua Visa
-                    _handlePayment('Visa');
-                  },
-                  child: Row(
-                    children: [
-                      Icon(Icons.credit_card),
-                      SizedBox(width: 8),
-                      Text('Visa'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            Text(
+                'Total Amount: \$${_calculateTicketPrice().toStringAsFixed(2)}'),
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // Điều hướng đến màn hình thành công
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (ctx) => SuccessScreen(),
-                    ),
-                  );
+                  if (selectedSeats.isNotEmpty) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (ctx) => SuccessScreen(),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text('Please select at least one seat!')),
+                    );
+                  }
                 },
-                child: Text('Book Now'),
+                child: Text(
+                  'Book Now',
+                ),
               ),
             ),
           ],
